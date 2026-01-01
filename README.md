@@ -6,8 +6,6 @@ runs on windows, mac, android, ios—whatever maui supports. core is q# for the 
 
 ### quick peek
 
-here's what it looks like in action (windows screenshot—mobile is similar but tighter):
-
 ![main screen with bloch sphere and sliders](https://miro.medium.com/v2/resize:fit:1358/format:webp/1*e2r3wIstaLYKtPDuCm0Ytg.png)
 
 ![bloch sphere rotating](https://www.jonvet.com/static/images/quantum-state-simulator/x-to-y.gif)
