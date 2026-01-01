@@ -10,8 +10,6 @@ runs on windows, mac, android, ios—whatever maui supports. core is q# for the 
 
 ![bloch sphere rotating](https://www.jonvet.com/static/images/quantum-state-simulator/x-to-y.gif)
 
-![fidelity chart after a noisy run](https://www.researchgate.net/publication/331033430/figure/fig2/AS:725755680014339@1550045046468/Variation-of-fidelity-in-exploration-range-Here-the-fidelity-graph-is-drawn-for.png)
-
 ### what it does
 - teleport arbitrary single-qubit states (ry + rz prep)
 - add depolarizing noise (slide it up and watch success drop)
