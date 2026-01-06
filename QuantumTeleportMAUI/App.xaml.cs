@@ -1,8 +1,8 @@
 namespace QuantumTeleportMAUI;
 
 public partial class App : Application {
-    public App() {
+    public App(Views.MainPage mainPage) {
         InitializeComponent();
-        MainPage = new Views.MainPage();
+        MainPage = mainPage;
     }
 }

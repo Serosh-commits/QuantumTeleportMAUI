@@ -12,17 +12,13 @@ public static class MauiProgram {
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
             });
 
-        builder.Services.AddMauiBlazorWebView();
-
-#if DEBUG
-        builder.Logging.AddDebug();
-#endif
-
         builder.Services.AddSingleton<QuantumService>();
         builder.Services.AddSingleton<DataService>(provider => {
             var dbPath = Path.Combine(FileSystem.AppDataDirectory, "experiments.db3");
             return new DataService(dbPath);
         });
+
+        builder.Services.AddTransient<Views.MainPage>();
 
         return builder.Build();
     }
