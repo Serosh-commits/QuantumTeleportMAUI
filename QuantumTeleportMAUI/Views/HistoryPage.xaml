@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="QuantumTeleportMAUI.Views.HistoryPage"
+             Title="Experiment Analysis">
+    <VerticalStackLayout Spacing="15" Padding="20">
+        <Label Text="Experimental History" Style="{StaticResource TitleLabel}" />
+        
+        <CollectionView x:Name="historyList">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame Style="{StaticResource ParameterCard}" Margin="0,5">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <VerticalStackLayout Grid.Column="0">
+                                <Label Text="{Binding RunTime, StringFormat='{0:g}'}" FontAttributes="Bold" />
+                                <Label Text="{Binding SuccessRate, StringFormat='Success: {0:P1}'}" FontSize="Small" />
+                                <Label Text="{Binding Noise, StringFormat='Noise: {0:P0}'}" FontSize="Small" />
+                            </VerticalStackLayout>
+                            <Label Grid.Column="1" Text="DETAILS" VerticalOptions="Center" TextColor="{StaticResource Primary}" />
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        
+        <Button Text="BACK TO SIMULATOR" Clicked="GoBack" />
+    </VerticalStackLayout>
+</ContentPage>

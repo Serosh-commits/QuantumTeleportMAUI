@@ -10,13 +10,15 @@ namespace QuantumTeleportMAUI.Views;
 public partial class MainPage : ContentPage {
     private readonly QuantumService _qService;
     private readonly DataService _dataSvc;
+    private readonly HistoryPage _historyPage;
     private List<ExperimentResult> _runHistory = new();
     private double _animAngle = 0;
 
-    public MainPage(QuantumService qService, DataService dataService) {
+    public MainPage(QuantumService qService, DataService dataService, HistoryPage historyPage) {
         InitializeComponent();
         _qService = qService;
         _dataSvc = dataService;
+        _historyPage = historyPage;
         _ = RefreshHistoryAsync();
 
         thetaControl.ValueChanged += (s, e) => {
@@ -137,5 +139,9 @@ public partial class MainPage : ContentPage {
         await _dataSvc.ClearAllAsync();
         _runHistory.Clear();
         await DisplayAlert("cleared", "history wiped.", "ok");
+    }
+
+    private async void ViewHistory(object sender, EventArgs e) {
+        await Navigation.PushAsync(_historyPage);
     }
 }

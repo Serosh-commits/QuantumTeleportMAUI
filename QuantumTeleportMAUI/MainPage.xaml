@@ -44,6 +44,8 @@
 
             <charts:CartesianChart x:Name="successChart" HeightRequest="150" Margin="0,10" />
 
+            <Button Text="VIEW DETAILED HISTORY" Clicked="ViewHistory" BackgroundColor="{StaticResource Secondary}" Margin="0,10,0,0" />
+
             <Grid ColumnDefinitions="*,*" ColumnSpacing="15">
                 <Button Grid.Column="0" Text="Export Logs" Clicked="ExportHistory" BackgroundColor="{StaticResource Secondary}" />
                 <Button Grid.Column="1" Text="Clear History" Clicked="ClearLog" BackgroundColor="{StaticResource Error}" />
