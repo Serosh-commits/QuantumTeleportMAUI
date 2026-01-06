@@ -19,10 +19,10 @@ public class QuantumServiceTests {
     }
 
     [Fact]
-    public void Simulate_BadNoise_LogsWarning() {
+    public async Task Simulate_BadNoise_LogsWarning() {
         var svc = new QuantumService(_mockLogger.Object);
         var req = new TeleportRequest { Noise = 2.0 };
-        _ = svc.SimulateTeleportAsync(req).Result;
+        await svc.SimulateTeleportAsync(req);
         _mockLogger.Verify(l => l.LogWarning(It.IsAny<string>()), Times.Once);
     }
 
