@@ -6,41 +6,48 @@
              xmlns:charts="clr-namespace:Microcharts.Maui;assembly=Microcharts.Maui"
              Title="Quantum Teleporter">
     <ScrollView>
-        <VerticalStackLayout Spacing="10" Padding="20">
-            <Label Text="quantum teleport sim" 
-                   FontSize="Title" HorizontalOptions="Center" />
+        <VerticalStackLayout Spacing="15" Padding="20">
+            <Label Text="Quantum Teleportation" Style="{StaticResource TitleLabel}" />
 
-            <Label Text="theta (polar):" />
-            <Slider x:Name="thetaControl" Minimum="0" Maximum="3.14" Value="1.047" />
-            <Label x:Name="thetaLabel" Text="theta: 1.047 (60°)" />
+            <Frame Style="{StaticResource ParameterCard}">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Qubit State (Bloch Sphere)" FontAttributes="Bold" />
+                    <Label x:Name="thetaLabel" Text="Polar Angle (θ): 1.047" FontSize="Small" />
+                    <Slider x:Name="thetaControl" Minimum="0" Maximum="3.14" Value="1.047" ThumbColor="{StaticResource Primary}" />
+                    
+                    <Label x:Name="phiLabel" Text="Azimuthal Angle (φ): 0.785" FontSize="Small" />
+                    <Slider x:Name="phiControl" Minimum="0" Maximum="6.28" Value="0.785" ThumbColor="{StaticResource Secondary}" />
+                </VerticalStackLayout>
+            </Frame>
 
-            <Label Text="phi (azimuth):" />
-            <Slider x:Name="phiControl" Minimum="0" Maximum="6.28" Value="0.785" />
-            <Label x:Name="phiLabel" Text="phi: 0.785 (45°)" />
+            <Frame Style="{StaticResource ParameterCard}">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Simulation Parameters" FontAttributes="Bold" />
+                    <Label x:Name="shotsLabel" Text="Shots: 1000" FontSize="Small" />
+                    <Slider x:Name="shotsControl" Minimum="100" Maximum="5000" Value="1000" />
+                    
+                    <Label x:Name="noiseLabel" Text="Quantum Noise: 0%" FontSize="Small" />
+                    <Slider x:Name="noiseControl" Minimum="0" Maximum="0.1" Value="0" />
 
-            <Label Text="shots:" />
-            <Slider x:Name="shotsControl" Minimum="100" Maximum="5000" Value="1000" />
-            <Label x:Name="shotsLabel" Text="shots: 1000" />
+                    <HorizontalStackLayout Spacing="10">
+                        <CheckBox x:Name="ecCheck" Color="{StaticResource Primary}" />
+                        <Label Text="Enable Error Correction (Bit-Flip)" VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+            </Frame>
 
-            <Label Text="noise prob:" />
-            <Slider x:Name="noiseControl" Minimum="0" Maximum="0.1" Value="0" />
-            <Label x:Name="noiseLabel" Text="noise: 0%" />
+            <Button Text="EXECUTE TELEPORTATION" Clicked="RunSim" Margin="0,10" />
 
-            <CheckBox x:Name="ecCheck" />
-            <Label Text="use error correction?" />
+            <skia:SKCanvasView x:Name="blochView" PaintSurface="DrawBloch" HeightRequest="260" WidthRequest="260" HorizontalOptions="Center" />
 
-            <Button Text="fire teleport!" Clicked="RunSim" BackgroundColor="LightBlue" />
+            <Label x:Name="statusText" Text="Ready for teleportation..." HorizontalOptions="Center" FontAttributes="Italic" />
 
-            <skia:SKCanvasView x:Name="blochView" PaintSurface="DrawBloch" HeightRequest="250" WidthRequest="250" />
+            <charts:CartesianChart x:Name="successChart" HeightRequest="150" Margin="0,10" />
 
-            <Label x:Name="statusText" Text="ready to teleport..." FontAttributes="Bold" />
-
-            <charts:CartesianChart x:Name="successChart" HeightRequest="150" />
-
-            <HorizontalStackLayout>
-                <Button Text="export csv" Clicked="ExportHistory" />
-                <Button Text="clear log" Clicked="ClearLog" />
-            </HorizontalStackLayout>
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="15">
+                <Button Grid.Column="0" Text="Export Logs" Clicked="ExportHistory" BackgroundColor="{StaticResource Secondary}" />
+                <Button Grid.Column="1" Text="Clear History" Clicked="ClearLog" BackgroundColor="{StaticResource Error}" />
+            </Grid>
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>
