@@ -1,46 +1,44 @@
-# 🌌 QuantumTeleportMAUI: The Abyssal Simulator
+# QuantumTeleportMAUI
 
-**QuantumTeleportMAUI** is a high-fidelity, cross-platform simulation environment designed to explore the frontiers of quantum state transfer. Built on the bedrock of **.NET MAUI** and powered by a core **Q#** engine, this application provides an immersive interface for executing and analyzing quantum teleportation protocols under varying degrees of environmental decoherence.
+This is a little project I put together to experiment with quantum teleportation using .NET MAUI and Q#. Teleportation is one of the most fascinating concepts in quantum physics, and I wanted a way to visualize it and see how it holds up against noise.
 
----
+It runs on Windows, Mac, Android, and iOS. The core logic is written in Q# for the actual simulation, while the UI uses SkiaSharp for the Bloch sphere visualization and Microcharts for the success rates.
 
-## 🛰️ Core Capabilities
+### Features
+- **Teleport States**: Set up any single-qubit state using polar and azimuthal angles.
+- **Noise Simulation**: See what happens when you introduce decoherence into the system.
+- **Error Correction**: There's a built-in 3-qubit bit-flip code you can toggle to see how it improves fidelity in noisy environments.
+- **Experiment History**: All your runs are saved to a local SQLite database, and you can export them to CSV if you want to crunch the numbers elsewhere.
 
-- **State Preparation**: Encode arbitrary single-qubit states using $(\theta, \phi)$ parameters on the Bloch Sphere.
-- **Protocol Fidelity**: Execute the standard quantum teleportation circuit with high-precision Q# operations.
-- **Decoherence Simulation**: Inject controlled noise levels to study the impact of depolarizing channels on teleportation success.
-- **Error Mitigation**: Deploy a 3-qubit bit-flip correction code to sustain fidelity in high-noise environments.
-- **Data Analytics**: Real-time visualization with SkiaSharp and Microcharts, coupled with persistent CSV logging for post-run analysis.
+### Tech Stack
+- **Quantum Kernel**: Microsoft Q# (QDK)
+- **Framework**: .NET MAUI
+- **Graphics**: SkiaSharp
+- **Database**: SQLite
 
-## 🛠️ Architecture & Tech Stack
+### How to run it
+Make sure you have the .NET 8 SDK and the MAUI workload installed.
 
-- **Kernel**: [Microsoft QDK](https://learn.microsoft.com/quantum/) (Q#) for pure quantum logic execution.
-- **Frontend**: .NET MAUI (C# / XAML) for a seamless cross-platform experience (Windows, macOS, Android, iOS).
-- **Visualization**: SkiaSharp for dynamic Bloch Sphere rendering and Microcharts for statistical distribution.
-- **Persistence**: SQLite (sqlite-net-pcl) for robust local storage of experimental history.
+1. Clone the repo:
+   ```bash
+   git clone https://github.com/Serosh-commits/QuantumTeleportMAUI.git
+   ```
+2. Restore dependencies:
+   ```bash
+   dotnet restore
+   ```
+3. Run for your preferred platform:
+   ```bash
+   dotnet run -f net8.0-windows10.0.19041.0
+   # or net8.0-maccatalyst, net8.0-android, net8.0-ios
+   ```
 
-## 🚀 Execution Guide
+### Future Plans
+- Adding multi-qubit entanglement support.
+- Implementing more complex error correction like Steane or Surface codes.
+- Maybe connecting it to actual hardware via Azure Quantum.
 
-### Prerequisites
-- .NET 8.0 SDK or higher
-- MAUI Workload (`dotnet workload install maui`)
+If you find any bugs or have ideas for features, feel free to open an issue or a PR.
 
-### Quick Start
-```bash
-git clone https://github.com/Serosh-commits/QuantumTeleportMAUI.git
-cd QuantumTeleportMAUI
-dotnet restore
-dotnet run -f [target-framework]
-```
-*(Targets: `net8.0-windows`, `net8.0-maccatalyst`, `net8.0-android`, `net8.0-ios`)*
+Peace.
 
-## 📈 Roadmap (The Ascendance)
-- [x] Persistent Experiment Logging & Export
-- [x] Premium Visual Design System
-- [ ] Multi-Qubit Entanglement Swapping
-- [ ] Global Quantum Cloud Integration (Azure Quantum)
-- [ ] Advanced Error Correction (Steane & Surface Codes)
-
----
-
-Developed with passion by **Serosh**. Perfected by ARTIFICIAL INTELLIGENCE.
