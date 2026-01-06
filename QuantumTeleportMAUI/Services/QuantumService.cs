@@ -18,12 +18,9 @@ public class QuantumService {
             req.Shots = 100;
         }
 
-        var simConfig = new QuantumSimulationConfiguration();
-        await using var qSim = new QuantumSimulator(simConfig);
+        await using var qSim = new QuantumSimulator();
 
-        var successProb = await qSim.RunAsync(() => 
-            RunTeleportTest.Run(req.NumQubits, req.Theta, req.Phi, req.Noise, req.EnableEC, req.Shots)
-        );
+        var successProb = await RunTeleportTest.Run(qSim, req.NumQubits, req.Theta, req.Phi, req.Noise, req.EnableEC, req.Shots);
 
         _logger.LogInformation($"sim done: {successProb:P1} success");
         return successProb;
