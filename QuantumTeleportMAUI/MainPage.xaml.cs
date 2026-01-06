@@ -47,7 +47,12 @@ public partial class MainPage : ContentPage {
             var newRun = new ExperimentResult {
                 SuccessRate = success,
                 Fidelity = success,
-                Settings = settings
+                NumQubits = settings.NumQubits,
+                Theta = settings.Theta,
+                Phi = settings.Phi,
+                Shots = settings.Shots,
+                Noise = settings.Noise,
+                EnableEC = settings.EnableEC
             };
             await _dataSvc.SaveResultAsync(newRun);
             _runHistory.Add(newRun);
@@ -63,31 +68,47 @@ public partial class MainPage : ContentPage {
 
     private void DrawBloch(object sender, SKPaintSurfaceEventArgs e) {
         var canvas = e.Surface.Canvas;
-        canvas.Clear(SKColors.LightBlue);
+        canvas.Clear(SKColors.White);
 
-        _animAngle += 0.05;
+        _animAngle += 0.02;
 
-        var spherePaint = new SKPaint { Color = SKColors.Black, Style = SKPaintStyle.Stroke, StrokeWidth = 2 };
-        canvas.DrawCircle(125, 125, 100, spherePaint);
+        var center = new SKPoint(125, 125);
+        var radius = 100f;
 
-        canvas.DrawLine(25, 125, 75, 125, spherePaint);
-        canvas.DrawLine(125, 25, 125, 75, spherePaint);
-        canvas.DrawLine(125, 225, 125, 175, spherePaint);
+        using var spherePaint = new SKPaint { Color = SKColors.LightGray, Style = SKPaintStyle.Stroke, StrokeWidth = 1, IsAntialias = true };
+        canvas.DrawCircle(center, radius, spherePaint);
+
+        using var axisPaint = new SKPaint { Color = SKColors.DarkGray, StrokeWidth = 1, IsAntialias = true };
+        canvas.DrawLine(center.X - radius, center.Y, center.X + radius, center.Y, axisPaint);
+        canvas.DrawLine(center.X, center.Y - radius, center.X, center.Y + radius, axisPaint);
 
         var theta = thetaControl.Value;
         var phi = phiControl.Value;
-        var vecX = Math.Sin(theta) * Math.Cos(phi);
-        var vecY = Math.Sin(theta) * Math.Sin(phi);
-        var vecZ = Math.Cos(theta);
+        
+        var x = Math.Sin(theta) * Math.Cos(phi);
+        var y = Math.Sin(theta) * Math.Sin(phi);
+        var z = Math.Cos(theta);
 
-        var projX = 125 + vecX * 80;
-        var projY = 125 - vecZ * 80;
-        var vecPaint = new SKPaint { Color = SKColors.Red, StrokeWidth = 4, PathEffect = SKPathEffect.CreateDash(new float[] { 10, 5 }, 0) };
+        var endPoint = new SKPoint(
+            center.X + (float)x * radius,
+            center.Y - (float)z * radius
+        );
 
-        canvas.DrawLine(125, 125, (float)projX, (float)projY, vecPaint);
+        using var vectorPaint = new SKPaint { 
+            Color = SKColor.Parse("#2196F3"), 
+            StrokeWidth = 4, 
+            StrokeCap = SKStrokeCap.Round, 
+            IsAntialias = true 
+        };
+        canvas.DrawLine(center, endPoint, vectorPaint);
 
-        using var textPaint = new SKPaint { Color = SKColors.Black, TextSize = 12 };
-        canvas.DrawText($"|ψ⟩ at θ={theta:F1}, φ={phi:F1}", 10, 240, textPaint);
+        using var pointPaint = new SKPaint { Color = SKColor.Parse("#1976D2"), Style = SKPaintStyle.Fill, IsAntialias = true };
+        canvas.DrawCircle(endPoint, 6, pointPaint);
+
+        using var textPaint = new SKPaint { Color = SKColors.Black, TextSize = 14, IsAntialias = true, Typeface = SKTypeface.FromFamilyName("Arial", SKTypefaceStyle.Bold) };
+        canvas.DrawText("|0⟩", center.X - 10, center.Y - radius - 10, textPaint);
+        canvas.DrawText("|1⟩", center.X - 10, center.Y + radius + 20, textPaint);
+        canvas.DrawText($"|ψ⟩ (θ={theta:F2}, φ={phi:F2})", 10, 240, textPaint);
     }
 
     private void UpdateChart(double success) {
